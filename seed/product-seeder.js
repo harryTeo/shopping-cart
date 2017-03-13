@@ -1,0 +1,56 @@
+var Product = require("../models/product");
+var mongoose = require('mongoose');
+
+mongoose.connect("localhost:27017/shopping"); // If the database "shopping" does not already exist, it will be created automatically
+
+// var product = new Product({
+// 	imagePath: "https://upload.wikimedia.org/wikipedia/en/5/5e/Gothiccover.png",
+// 	title: "Gothic Video Game",
+// 	description: "Awesome Game!!",
+// 	price: 10
+// });
+
+var products = [
+	new Product({
+		imagePath: "https://upload.wikimedia.org/wikipedia/en/5/5e/Gothiccover.png",
+		title: "Gothic Video Game",
+		description: "Awesome Game!!",
+		price: 10
+	}),
+	new Product({
+		imagePath: "http://eu.blizzard.com/static/_images/games/wow/wallpapers/wall2/wall2-1440x900.jpg",
+		title: "World of Warcraft Video Game",
+		description: "Also awesome? But of course it was better in vanilla ...",
+		price: 20
+	}),
+	new Product({
+		imagePath: "https://support.activision.com/servlet/servlet.FileDownload?file=00PU000000Rq6tz",
+		title: "Call of Duty Video Game",
+		description: "Meh ... nah, it's okkay I guess",
+		price: 30
+	}),	
+	new Product({
+		imagePath: "https://pmcdeadline2.files.wordpress.com/2014/02/minecraft__140227211000.jpg",
+		title: "Minecraft Video Game",
+		description: "Now, that is super awesome!",
+		price: 15
+	}),
+	new Product({
+		imagePath: "https://upload.wikimedia.org/wikipedia/en/b/bb/Dark_souls_3_cover_art.jpg",
+		title: "Dark Souls 3 Video Game",
+		description: "I died",
+		price: 50
+	}),				
+];
+
+var done = 0;
+for (var i=0; i<products.length; i++){
+	products[i].save(function(err,result) { // So, for the "Product" Model, we create a "poducts" Collection and we are saving each "product" Document into that Collection
+		done++;
+		if(done===products.length) {
+			mongoose.disconnect();
+		}
+	}); 
+}
+
+// Note: I will run this file manually (>node product-seeder.js ,in the "seed" folder) since I only want to seed this data once.
